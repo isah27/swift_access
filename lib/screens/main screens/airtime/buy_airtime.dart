@@ -26,6 +26,7 @@ class _BuyAirtimePageState extends State<BuyAirtimePage> {
       backgroundColor: Colors.green.shade900,
       body: Column(
         children: [
+          SizedBox(height: size.height * 0.02),
           DescAndBackNav(text: "Buy Airtime", size: size),
           Expanded(
             child: Container(

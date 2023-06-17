@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../auth bloc/auth_bloc.dart';
 import '../../page route/detail/route.dart';
 import 'app_text.dart';
 import 'app_textfield.dart';
@@ -46,8 +48,8 @@ class LoginSignUpSwitch extends StatelessWidget {
   }
 }
 
-class Fingerprint extends StatelessWidget {
-  const Fingerprint({
+class FingerprintButton extends StatelessWidget {
+  const FingerprintButton({
     super.key,
     required this.size,
     required this.onTap,
@@ -82,6 +84,38 @@ class Fingerprint extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> fingerPrint(AuthBloc readBloc, BuildContext context,
+    GlobalKey<FormState> formkey) async {
+  if (readBloc.localUser.password == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Login to access fingerprint")));
+  } else {
+    // readBloc.passwordController.text =
+    //     localUser?.password ?? "";
+    try {
+      final LocalAuthentication auth = LocalAuthentication();
+      await auth
+          .authenticate(
+        localizedReason: 'Please authenticate to access your account',
+        options: const AuthenticationOptions(biometricOnly: true),
+      )
+          .then((value) {
+        readBloc.passwordController.text = readBloc.localUser.password!;
+        if (value && formkey.currentState!.validate()) {
+          readBloc.loginEvent();
+          Navigator.pushNamedAndRemoveUntil(
+              context, AppRoute.home, (route) => false);
+          return false;
+        }
+        return false;
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Phone Not Supported")));
+    }
   }
 }
 

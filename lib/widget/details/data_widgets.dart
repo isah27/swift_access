@@ -79,12 +79,12 @@ class NetworkButton extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: index == selectedRegion
-              ? Colors.amber.shade900
+              ? Colors.grey.shade600
               : Colors.grey.shade100,
           borderRadius: BorderRadius.circular(size.width * 0.02),
           border: Border.all(
               color: index == selectedRegion
-                  ? Colors.amber.shade900
+                  ? Colors.grey.shade600
                   : Colors.grey.shade100,
               width: 1.5),
         ),

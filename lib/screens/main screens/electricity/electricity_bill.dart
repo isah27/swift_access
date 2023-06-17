@@ -30,6 +30,7 @@ class _ElectricityBillPageState extends State<ElectricityBillPage> {
       backgroundColor: Colors.red.shade900,
       body: Column(
         children: [
+          SizedBox(height: size.height * 0.02),
           DescAndBackNav(
               text: "Electricity Bill Payment",
               size: Size(size.width * 0.3, size.height)),

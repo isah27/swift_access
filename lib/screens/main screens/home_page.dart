@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:swift_access/page%20route/detail/route.dart';
 import 'package:swift_access/widget/app_widget.dart';
+
+import '../../auth bloc/auth_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -9,6 +12,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final watchBloc = context.watch<AuthBloc>();
+    final readBloc = context.read<AuthBloc>();
     return Scaffold(
       drawer: CustomDrawer(size: size),
       body: Container(
@@ -29,20 +34,21 @@ class HomePage extends StatelessWidget {
             children: [
               UserInfoBanner(
                 size: size,
-                username: "isah",
-                email: "isah@gmail.com",
+                username: "${watchBloc.user.username}",
+                email: "${watchBloc.user.email}",
                 drawer: CustomDrawer(size: size),
               ),
               SizedBox(height: size.height * 0.02),
               // acct balance
-              AcctBalance(size: size, acctBallance: 250),
+              AcctBalance(
+                  size: size, acctBallance: "${watchBloc.user.acctBalance}"),
               BankInfo(
                 size: size,
-                bankName: "Zenith bank",
-                acctHolderName: "isah",
-                acctNumber: 0839483921,
+                bankName: "${watchBloc.user.bankName}",
+                acctHolderName: "${watchBloc.user.acctName}",
+                acctNumber: "${watchBloc.user.acctNumber}",
               ),
-              SizedBox(height: size.height * 0.02),
+              SizedBox(height: size.height * 0.03),
               Expanded(
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
@@ -55,7 +61,7 @@ class HomePage extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        SizedBox(height: size.height * 0.02),
+                        SizedBox(height: size.height * 0.03),
                         Row(
                           children: [
                             AppText(

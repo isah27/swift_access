@@ -10,6 +10,7 @@ class AppButton extends StatelessWidget {
     this.textSize = 14,
     required this.text,
     required this.onTap,
+    this.isLoading = false,
   }) : super(key: key);
 
   final Size size;
@@ -18,6 +19,7 @@ class AppButton extends StatelessWidget {
   final Color bgColor;
   final Function() onTap;
   final double textSize;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +29,21 @@ class AppButton extends StatelessWidget {
         color: bgColor,
         minWidth: size.width * 0.9,
         padding: EdgeInsets.all(size.height * 0.015),
-        onPressed: () => onTap(),
-        child: AppText(
-          text: text,
-          size: textSize.sp,
-          textColor: textColor,
+        onPressed: () {
+          if (!isLoading) {
+            onTap();
+          }
+        },
+        child: Center(
+          child: isLoading
+              ? const CircularProgressIndicator.adaptive(
+                  backgroundColor: Colors.white,
+                )
+              : AppText(
+                  text: text,
+                  size: textSize.sp,
+                  textColor: textColor,
+                ),
         ),
       ),
     );
@@ -45,21 +57,25 @@ class AppText extends StatelessWidget {
     this.size = 12,
     this.textColor = Colors.white,
     this.fontWeight = FontWeight.normal,
+    this.textAlign,
   }) : super(key: key);
 
   final String text;
   final double size;
   final Color textColor;
   final FontWeight fontWeight;
-
+  final TextAlign? textAlign;
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
+      textAlign: textAlign,
+
       style: TextStyle(
         fontSize: size,
         color: textColor,
         fontWeight: fontWeight,
+        decoration: TextDecoration.none
       ),
     );
   }

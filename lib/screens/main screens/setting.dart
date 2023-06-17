@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:swift_access/page%20route/detail/route.dart';
 import 'package:swift_access/widget/app_widget.dart';
+
+import '../../auth bloc/auth_bloc.dart';
 
 class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
@@ -9,10 +12,13 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final watchBloc = context.watch<AuthBloc>();
+    final readBloc = context.read<AuthBloc>();
     return Scaffold(
       backgroundColor: Colors.amber.shade900,
       body: Column(
         children: [
+          SizedBox(height: size.height * 0.02),
           DescAndBackNav(text: "Settings", size: size),
           Expanded(
             child: Container(
@@ -38,25 +44,25 @@ class SettingPage extends StatelessWidget {
                   DrawerMenu(
                     color: Colors.black.withOpacity(0.6),
                     size: size,
-                    text: "Isah Neziru",
+                    text: "${watchBloc.user.fullname}",
                     icon: Icons.person,
                   ),
                   DrawerMenu(
                     color: Colors.black.withOpacity(0.6),
                     size: size,
-                    text: "Nazzy",
+                    text: "${watchBloc.user.username}",
                     icon: Icons.verified,
                   ),
                   DrawerMenu(
                     color: Colors.black.withOpacity(0.6),
                     size: size,
-                    text: "08029533423",
+                    text: "${watchBloc.user.phonenumber}",
                     icon: Icons.call,
                   ),
                   DrawerMenu(
                     color: Colors.black.withOpacity(0.6),
                     size: size,
-                    text: "isah@gmail.com",
+                    text: "${watchBloc.user.email}",
                     icon: Icons.email,
                   ),
                   AppText(
@@ -79,8 +85,11 @@ class SettingPage extends StatelessWidget {
                     size: size,
                     text: "Logout",
                     icon: Icons.logout,
-                    onTap: () => Navigator.pushNamedAndRemoveUntil(
-                        context, AppRoute.login, (route) => false),
+                    onTap: () {
+                      readBloc.sgnOutEvent();
+                      return Navigator.pushNamedAndRemoveUntil(
+                          context, AppRoute.login, (route) => false);
+                    },
                   ),
                   AppText(
                     text: "About",

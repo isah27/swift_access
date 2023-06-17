@@ -11,6 +11,7 @@ class BuyDataPage extends StatelessWidget {
       backgroundColor: Colors.amber.shade900,
       body: Column(
         children: [
+          SizedBox(height: size.height * 0.02),
           DescAndBackNav(text: "Buy Data", size: size),
           Expanded(
             child: Container(
@@ -59,5 +60,3 @@ class BuyDataPage extends StatelessWidget {
     );
   }
 }
-
-

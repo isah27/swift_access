@@ -9,6 +9,8 @@ import 'package:swift_access/screens/main%20screens/data/buy_data.dart';
 import 'package:swift_access/screens/main%20screens/data/data_home.dart';
 import 'package:swift_access/screens/main%20screens/home_page.dart';
 import 'package:swift_access/screens/main%20screens/setting.dart';
+import 'package:swift_access/splash_screen.dart';
+import 'package:swift_access/widget/details/acct_opening_loading.dart';
 
 import '../../screens/Auth/login.dart';
 import '../../screens/main screens/cable/cable_tv.dart';
@@ -17,7 +19,7 @@ import '../../screens/main screens/transactions.dart';
 import 'custom_page_route.dart';
 
 class AppRoute {
-  static const String login = '/';
+  static const String login = '/login';
   static const String register = '/sign-up';
   static const String resetPassword = '/password-reset';
   static const String home = '/home-page';
@@ -30,7 +32,9 @@ class AppRoute {
   static const String buyAirtime = '/buy-airtime-page';
   static const String cableTv = '/cable-tv-page';
   static const String electrictyBill = '/electricity-bill-page';
-    static const String transactions = '/transactions-page';
+  static const String transactions = '/transactions-page';
+  static const String splash = '/';
+  static const String lencoLoadingPage = '/lenco loading screen';
 
   static Route onGeneratedRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -38,10 +42,10 @@ class AppRoute {
         return CustomPageRoute(child: const LoginPage());
       case register:
         return CustomPageRoute(
-            direction: AxisDirection.right, child: const SignUpPage());
+            direction: AxisDirection.right, child: SignUpPage());
       case resetPassword:
         return CustomPageRoute(
-            direction: AxisDirection.up, child: const PasswordResetPage());
+            direction: AxisDirection.up, child: PasswordResetPage());
       case home:
         return CustomPageRoute(
             direction: AxisDirection.down, child: const HomePage());
@@ -73,9 +77,16 @@ class AppRoute {
       case electrictyBill:
         return CustomPageRoute(
             direction: AxisDirection.left, child: const ElectricityBillPage());
- case transactions:
+      case transactions:
         return CustomPageRoute(
             direction: AxisDirection.down, child: const TransactionsPage());
+      case splash:
+        return CustomPageRoute(
+            direction: AxisDirection.up, child: const SplashScreen());
+      case lencoLoadingPage:
+        return CustomPageRoute(
+            direction: AxisDirection.left,
+            child: const LencoAccountOpeningLoading());
 
       default:
         return CustomPageRoute(child: const LoginPage());

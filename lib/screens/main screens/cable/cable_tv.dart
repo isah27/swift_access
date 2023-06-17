@@ -26,6 +26,7 @@ class _CableSubscriptionPageState extends State<CableSubscriptionPage> {
       backgroundColor: Colors.blue.shade900,
       body: Column(
         children: [
+          SizedBox(height: size.height * 0.02),
           DescAndBackNav(
               text: "Cable Subscription",
               size: Size(size.width * 0.5, size.height)),

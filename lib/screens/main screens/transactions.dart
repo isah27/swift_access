@@ -20,6 +20,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
       backgroundColor: Colors.blue.shade900,
       body: Column(
         children: [
+          SizedBox(height: size.height * 0.02),
           DescAndBackNav(text: "Transactions", size: size),
           Expanded(
             child: Container(
@@ -35,9 +36,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   InkWell(
-                    onTap: () {
-                      
-                    },
+                    onTap: () {},
                     child: Container(
                       padding: EdgeInsets.all(size.width * 0.02),
                       decoration: BoxDecoration(

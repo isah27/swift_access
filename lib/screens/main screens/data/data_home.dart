@@ -27,6 +27,7 @@ class _DataHomePageState extends State<DataHomePage> {
       backgroundColor: networkColors[selectedNetwork],
       body: Column(
         children: [
+          SizedBox(height: size.height * 0.01),
           DescAndBackNav(size: size, text: ""),
           Container(
             margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
@@ -133,4 +134,3 @@ class _DataHomePageState extends State<DataHomePage> {
     );
   }
 }
-

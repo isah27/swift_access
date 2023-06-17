@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:swift_access/page%20route/page_route.dart';
 import 'package:swift_access/widget/app_widget.dart';
-
+import 'package:clipboard/clipboard.dart';
 import '../../uitils/usefull_function.dart';
 
 class BankInfo extends StatelessWidget {
@@ -17,7 +19,7 @@ class BankInfo extends StatelessWidget {
   final Size size;
   final String bankName;
   final String acctHolderName;
-  final int acctNumber;
+  final String acctNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +48,16 @@ class BankInfo extends StatelessWidget {
               Row(
                 children: [
                   AppText(
-                    text: "$acctNumber",
+                    text: acctNumber,
                     size: 14.sp,
                     fontWeight: FontWeight.w500,
                   ),
                   SizedBox(width: size.width * 0.08),
                   InkWell(
                     onTap: () {
-                      print("Copy");
+                      FlutterClipboard.copy(acctNumber).then((value) =>
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("$acctNumber copied"))));
                     },
                     child: Icon(
                       Icons.copy,
@@ -84,6 +88,7 @@ class BankInfo extends StatelessWidget {
               AppText(
                 text: "₦50 charge",
                 size: 12.sp,
+                textColor: Colors.transparent,
                 fontWeight: FontWeight.w400,
               ),
               SizedBox(height: size.height * 0.01),
@@ -108,7 +113,7 @@ class AcctBalance extends StatefulWidget {
   });
 
   final Size size;
-  final int acctBallance;
+  final String acctBallance;
 
   @override
   State<AcctBalance> createState() => _AcctBalanceState();
@@ -136,7 +141,7 @@ class _AcctBalanceState extends State<AcctBalance> {
                   AppText(
                     text: !visible
                         ? "***"
-                        : "₦${UsefulFunction.currencyConverter(price: widget.acctBallance)}",
+                        : "₦${UsefulFunction.currencyConverter(price: double.parse(widget.acctBallance != "" ? widget.acctBallance : "0"))}",
                     size: 25.sp,
                     fontWeight: FontWeight.w700,
                   ),
